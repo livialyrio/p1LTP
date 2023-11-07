@@ -14,20 +14,30 @@ import model.Team;
 @WebServlet("/matchController")
 public class matchController extends HttpServlet {
 
-    @Override 
-    protected void doGet(HttpServletRequest request,
-    HttpServletResponse response) throws IOException, ServletException {
-        this.doPost(request, response);
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Match match = new Match();
+
+        Team resultado = match.getResult();
+        
+        request.setAttribute("vencedor", resultado);
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/pagina_de_resultado.jsp");
+        dispatcher.forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws IOException, ServletException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String home = request.getParameter("home");
         String visitor = request.getParameter("visitor");
-        String homeScore = request.getParameter("homeScore");
-        String visitorScore = request.getParameter("visitorScore");
-    }
+        String homeScoreString = request.getParameter("pontos_home");
+        String visitorScoreString = request.getParameter("pontos_visitor");
 
-    
+        Match p1 = new Match();
+        p1.setHome(home);
+        p1.setVisitor(visitor);
+        p1.setHomeScore(homeScoreString);
+        p1.setvisitorScore(homeScoreString);
+    }
+    }
 }
